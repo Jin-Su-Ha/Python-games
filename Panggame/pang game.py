@@ -210,6 +210,23 @@ while running:
                weapon_to_remove = weapon_idx
                ball_to_remove = ball_idx
 
+
+               #가장 작은 크기의 공이 아니라면 둘로 나뉘어진다.
+               if ball_img_idx <3:
+                   ball_width = ball_rect.size[0]
+                   ball_height = ball_rect.size[1]
+
+                   #나눠진 공 정보
+                   small_ball_rect = ball_images[ball_img_idx+1].get_rect()
+                   small_ball_width = small_ball_rect.size[0]
+                   small_ball_height = small_ball_rect.size[1]
+                   balls.append({"pos_x" : ball_pos_x + (ball_width/2) - (small_ball_width/2),"pos_y" : ball_pos_y+ (ball_height/2) - (small_ball_height/2),"img_idx" : ball_img_idx+1,"to_x" : -3,"to_y" : -6, "init_spd_y" : ball_speed_y[ball_img_idx+1]})#왼쪽 공
+                   balls.append({"pos_x" : ball_pos_x + (ball_width/2) - (small_ball_width/2),"pos_y" : ball_pos_y+ (ball_height/2) - (small_ball_height/2),"img_idx" : ball_img_idx+1,"to_x" : 3,"to_y" : -6, "init_spd_y" : ball_speed_y[ball_img_idx+1]})#오른쪽 공
+               break
+        else:
+            continue
+        break
+
     #충돌된 무기와 공을 없애버리자
 
     if weapon_to_remove > -1:
@@ -219,6 +236,11 @@ while running:
     if ball_to_remove > -1:
         del balls[ball_to_remove]
         ball_to_remove = -1
+
+    # 모든 공이 사라질 경우 게임은 종료된다
+    if len(balls) ==0:
+        game_result = "Mission Complete"
+        running = False
 
 
 
@@ -241,12 +263,31 @@ while running:
 
     screen.blit(character, (character_pos_x, character_pos_y))
 
+    #타이머 집어 넣기
+    #경과 시간(기존 이미지 전부 넣고 후에 추가로 넣어야 충돌 안생긴다.)
+
+    elapsed_time = (pygame.time.get_ticks() - start_ticks) / 1000 # 경과시간을 1000으로 나눠서 초 단위로 표시
+    timer = game_font.render(str(int(total_time - elapsed_time)), True, (255, 255, 255))
+
+    #출력할 글자, True, 글자 생성
+    screen.blit(timer, (10,10))
+
+    #시간이 0이하일 경우 게임을 종료한다
+    if total_time - elapsed_time <=0:
+        game_result = "Time over"
+        running = False
+
 
 
 
     # 게임 업데이트
     pygame.display.update()
 
+#게임 오버 메시지
+msg = game_font.render(game_result, True, (255, 255, 0))
+msg_rect = msg.get_rect(center=(int(screen_width/2), int(screen_height/2)))
+screen.blit(msg,msg_rect)
+pygame.display.update()
 
 pygame.time.delay(2000)
 # 게임 종료
