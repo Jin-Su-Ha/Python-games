@@ -53,6 +53,9 @@ spaceship = pygame.image.load(os.path.join(image_path, "spaceship.png"))
 missile = pygame.image.load(os.path.join(image_path, "missile.png"))
 
 
+explosion = pygame.image.load(os.path.join(image_path, "explosion.png"))
+
+
 #우주선 불러오기
 spaceship_size = spaceship.get_rect().size
 spaceship_width = spaceship_size[0]
@@ -220,13 +223,12 @@ while running:
             missile_rect.top = missile_pos_y
 
 
+
+
             if missile_rect.colliderect(rock_rect):
                 explosion_sound.play()
                 del(rock)
                 del(missiles)
-                explosion = pygame.image.load(os.path.join(image_path, "explosion.png"))
-                screen.blit(explosion, missile_rect)
-                del(explosion)
                 missiles = []
                 
                 # 미사일 위치 조정
@@ -264,6 +266,7 @@ while running:
 
     screen.blit(spaceship, (spaceship_x_pos, spaceship_y_pos))
     screen.blit(rock,(rock_x_pos,rock_y_pos))
+
 
     #타이머 집어 넣기
     #경과 시간(기존 이미지 전부 넣고 후에 추가로 넣어야 충돌 안생긴다.)
