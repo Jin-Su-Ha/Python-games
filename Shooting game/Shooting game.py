@@ -50,10 +50,7 @@ background = pygame.image.load(os.path.join(image_path, "background.png"))
 
 spaceship = pygame.image.load(os.path.join(image_path, "spaceship.png"))
 
-
 missile = pygame.image.load(os.path.join(image_path, "missile.png"))
-
-explosion = pygame.image.load(os.path.join(image_path, "explosion.png"))
 
 
 #우주선 불러오기
@@ -227,6 +224,9 @@ while running:
                 explosion_sound.play()
                 del(rock)
                 del(missiles)
+                explosion = pygame.image.load(os.path.join(image_path, "explosion.png"))
+                screen.blit(explosion, missile_rect)
+                del(explosion)
                 missiles = []
                 
                 # 미사일 위치 조정
@@ -292,11 +292,14 @@ while running:
     pygame.display.update()
 
 
+
 #게임 오버 메시지
 msg = game_font1.render(game_result, True, (255, 255, 0))
 msg_rect = msg.get_rect(center=(int(screen_width/2), int(screen_height/2)))
 screen.blit(msg,msg_rect)
 pygame.display.update()
+
+
 
 pygame.time.delay(2000)
 # 게임 종료
