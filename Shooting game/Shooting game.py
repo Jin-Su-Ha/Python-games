@@ -30,15 +30,19 @@ sound_path = os.path.join(current_path, "game_sounds") #sounds 폴더 위치 반
 
 
 
+
 #게임 사운드 설정
 missile_sound = pygame.mixer.Sound(os.path.join(sound_path, "shot.wav"))
 explosion_sound = pygame.mixer.Sound(os.path.join(sound_path, "explosion.wav"))
+crash_sound = pygame.mixer.Sound(os.path.join(sound_path, "crash.wav"))
+earth_explosion_sound = pygame.mixer.Sound(os.path.join(sound_path, "earth explosion.wav"))
+
 
 pygame.mixer.music.load(os.path.join(sound_path, "bgm.mp3"))
 pygame.mixer.music.play(-1)
 
 
-    
+
 
 
 #게임 하는데 필요한 이미지 넣기
@@ -108,7 +112,8 @@ missile_removed = -1
 game_font = pygame.font.Font(None, 20)
 game_font1 = pygame.font.Font(None, 40)
 
-
+# 게임 오버 메시지
+game_result = "Game over"
 
 # 총 시간
 total_time = 100
@@ -177,8 +182,9 @@ while running:
         rock_speed +=1
         rock_passed +=1
 
-    if rock_passed >=5:
-        print("지구가 파괴되었습니다.")
+    if rock_passed >=10:
+        earth_explosion_sound.play()
+        game_result = "Game over"
         running = False
     
     # 한계 값을 정하지 않으면 속도가 너무 빨라져 게임이 안됨
@@ -202,7 +208,8 @@ while running:
 
     #충돌 체크
     if spaceship_rect.colliderect(rock_rect):
-        print("우주선이 운석에 충돌했습니다.")
+        crash_sound.play()
+        game_result = "Game over"
         running = False
         break
 
@@ -236,6 +243,10 @@ while running:
                 rock_y_pos = 0
                 rock_speed +=1
                 rock_destroyed +=1
+
+                if rock_destroyed >=30:
+                    game_result = 'Mission Compelete'
+                    running = False
 
         
 
@@ -271,7 +282,7 @@ while running:
 
     #시간이 0이하일 경우 게임을 종료한다
     if total_time - elapsed_time <=0:
-        print("타임 아웃")
+        game_result = "Time over"
         running = False
 
 
@@ -281,7 +292,13 @@ while running:
     pygame.display.update()
 
 
+#게임 오버 메시지
+msg = game_font1.render(game_result, True, (255, 255, 0))
+msg_rect = msg.get_rect(center=(int(screen_width/2), int(screen_height/2)))
+screen.blit(msg,msg_rect)
+pygame.display.update()
 
+pygame.time.delay(2000)
 # 게임 종료
 pygame.quit()
 
