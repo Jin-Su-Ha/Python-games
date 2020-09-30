@@ -22,6 +22,12 @@ def list_file():
 def search_file():
     pass
 
+def start_file():
+    pass
+
+def close_file():
+    pass
+
 
 btn_add_file = Button(file_frame, padx = 5, pady = 5, width = 12, text ='파일추가', command = add_file)
 btn_add_file.pack(side = 'left')
@@ -84,12 +90,14 @@ cmb_format= ttk.Combobox(option_frame, state= 'readonly',values = opt_format, wi
 cmb_format.current(0)
 cmb_format.pack(side = 'left')
 
+#실행 프레임
+run_frame = Frame(root)
+run_frame.pack(fill='x', padx = 5, pady = 5)
 
-
-
-
-
-
+btn_start_file = Button(run_frame, padx = 5, pady = 5, width = 12, text ='닫기', command = start_file)
+btn_start_file.pack(side = 'right')
+btn_close_file = Button(run_frame, padx = 5, pady = 5, width = 12, text = '시작', command = close_file)
+btn_close_file.pack(side = 'right')
 
 
 
