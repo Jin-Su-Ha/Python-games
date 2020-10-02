@@ -24,7 +24,7 @@ image_path = os.path.join(current_path, "images and sounds") #images 폴더 위�
 sound_path = image_path #같은 폴더 안에 있으므로 이미지 경로와 같다
 
 
-#게임 하는데 필요한 모든 이미지 경로, 입력
+#게임 하는데 필요한 모든 이미지 경로
 background = pygame.image.load(os.path.join(image_path, "pangbackground.png"))
 
 stage = pygame.image.load(os.path.join(image_path, "pangstage.png"))
