@@ -14,19 +14,19 @@ root.geometry("640x480+500+200")#가로x세로 + x좌표 +y좌표
 def num_init():
     pass
 
-# / 기능 넣기
+# 나누기 기능 넣기
 def num_div():
     pass
 
-# x 기능 넣기
+# 곱하기 기능 넣기
 def num_mul():
     pass
 
-# + 기능 넣기
+# 더하기 기능 넣기
 def num_plu():
     pass
 
-# - 기능 넣기
+# 빼기 기능 넣기
 def num_sub():
     pass
 
